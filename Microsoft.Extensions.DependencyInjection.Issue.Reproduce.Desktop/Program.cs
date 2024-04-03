@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Microsoft.Extensions.DependencyInjection.Issue.Reproduce.Desktop
 {
@@ -14,9 +10,18 @@ namespace Microsoft.Extensions.DependencyInjection.Issue.Reproduce.Desktop
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            IServiceCollection services = new ServiceCollection()
+                .AddSingleton<ILogger, Logger>();
+
+            ServiceProvider Provider = services.BuildServiceProvider();
         }
+    }
+
+    public interface ILogger
+    {
+    }
+
+    public class Logger : ILogger
+    {
     }
 }
